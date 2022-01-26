@@ -76,15 +76,7 @@ class User {
         this.userTransactions = new ArrayList<String>();
     }
 
-    static List<User> userList = new ArrayList<>(
-            Arrays.asList(new User("user", "1234", "user"),
-                    new User("sanjith", "1234", "sanjith"),
-                    new User("sudev", "1234", "sudev"),
-                    new User("Dharun", "1234", "Dharun"),
-                    new User("javahar", "1234", "javahar"),
-                    new User("ram", "1234", "ram"),
-                    new User("somu", "1234", "somu"),
-                    new User("vijay", "1234", "vijay")));
+    static List<User> userList = new ArrayList<>();
     static List<Expenses> NgrpexpenseList = new ArrayList<>();
     static List<Group> groupList = new ArrayList<>();
 
