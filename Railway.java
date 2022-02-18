@@ -121,7 +121,7 @@ class Admin {
 
         System.out.print("Enter Route : ");
         String route = sc.next();
-
+        sc.nextLine();
         sc.nextLine();
         System.out.print("Enter Station : ");
         String station = sc.nextLine();
