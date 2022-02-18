@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Atm {
-    static int[] atm_bal = { 10, 10, 10, 15 };
+    static int[] atm_bal = { 5, 20, 10, 15 };
     public static Scanner sc = new Scanner(System.in);
     static Atm[] atm;
 
@@ -38,11 +38,17 @@ public class Atm {
         int[] amt_arr = new int[4];
         while (am > 0) {
             while (am >= 2000 && atm_bal[0] > 0) {
+                if (atm_bal[0] < 10 && atm_bal[1] > 10) {
+                    break;
+                }
                 am -= 2000;
                 amt_arr[0] += 1;
                 atm_bal[0] -= 1;
             }
             while (am >= 500 && atm_bal[1] > 0) {
+                if (atm_bal[1] < 10 && atm_bal[2] < 50 && atm_bal[3] < 50) {
+                    break;
+                }
                 am -= 500;
                 amt_arr[1] += 1;
                 atm_bal[1] -= 1;
@@ -84,7 +90,7 @@ public class Atm {
                 atm_bal[3] += sc.nextInt();
                 System.out.println("Amount added successfully");
                 System.out.println();
-                System.out.println("Press ENTER to coutinue");
+                System.out.println("Press ENTER to continue");
                 sc.nextLine();
                 sc.nextLine();
             } else if (c == 2) {
@@ -110,7 +116,7 @@ public class Atm {
             } else {
                 System.out.println("Enter the valid case !");
                 System.out.println();
-                System.out.println("Press ENTER to coutinue");
+                System.out.println("Press ENTER to continue");
                 sc.nextLine();
                 sc.nextLine();
             }
@@ -132,22 +138,22 @@ public class Atm {
             System.out.print("Enter you Option : ");
             int c = sc.nextInt();
             if (c == 1) {
-                System.out.println("Enter amount");
+                System.out.print("Enter amount : ");
                 int am = sc.nextInt();
                 while (true) {
                     int flag = 0, flag1 = 0, flag2 = 0, th = atm_bal[0], fi = atm_bal[1], tw = atm_bal[2],
                             hu = atm_bal[3];
                     if (am > atmbal()) {
-                        System.out.println("Given Amount is graeter than atm amount");
+                        System.out.println("Given Amount is greater than atm amount");
                         flag = 1;
                     }
                     if (am > atm[curr_user].User_Balance) {
-                        System.out.println("Insufficient Amount In your Account ! \nEnter crt amount");
+                        System.out.println("Insufficient Amount In your Account ! \nEnter correct amount");
                         flag2 = 1;
                     }
                     if (am < 100) {
                         flag1 = 1;
-                        System.out.println("Enter amount in above 100s");
+                        System.out.println("\nEnter amount in above 100s");
                     } else {
                         // temporary money check in atm
                         int k = am;
@@ -173,13 +179,13 @@ public class Atm {
                             hu -= 1;
                         }
                         if (c1 != am) {
-                            System.out.println("Only 2000 / 500 / 200 / 100 notes are availables");
-                            System.out.println("Enter correct demoniations");
+                            System.out.println("\nOnly 2000 / 500 / 200 / 100 notes are availables");
+                            System.out.println("\nEnter correct demoniations");
                             flag1 = 1;
                         }
                     }
                     if (flag == 1 || flag1 == 1 || flag2 == 1) {
-                        System.out.print("enter amout : ");
+                        System.out.print("Enter amount : ");
                         am = sc.nextInt();
                         continue;
                     } else {
@@ -188,11 +194,12 @@ public class Atm {
 
                 }
                 atm[curr_user].User_Balance -= am;
-                SimpleDateFormat ft = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+                int[] arr = withdraw(am);
+
+                SimpleDateFormat ft = new SimpleDateFormat("\nyyyy.MM.dd hh:mm:ss");
                 String date = ft.format(new Date()) + "-----WithDarw----" + am + "-----"
                         + atm[curr_user].User_Balance;
                 atm[curr_user].User_Statement.add(date);
-                int[] arr = withdraw(am);
                 for (int i = 0; i < arr.length; i++) {
                     if (i == 0) {
                         System.out.println("2000 notes = " + arr[i]);
@@ -208,7 +215,7 @@ public class Atm {
                     }
                 }
                 System.out.println();
-                System.out.println("Press ENTER to coutinue");
+                System.out.println("Press ENTER to continue");
                 sc.nextLine();
                 sc.nextLine();
             } else if (c == 2) {
@@ -225,7 +232,7 @@ public class Atm {
                     }
                 }
                 atm[curr_user].User_Balance += am;
-                SimpleDateFormat ft = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+                SimpleDateFormat ft = new SimpleDateFormat("\nyyyy.MM.dd hh:mm:ss");
                 String date = ft.format(new Date()) + "-----Deposit-----" + am + "-----"
                         + atm[curr_user].User_Balance;
                 for (; am != 0;) {
@@ -247,14 +254,14 @@ public class Atm {
                 atm[curr_user].User_Statement.add(date);
                 System.out.println("Amout Deposited successfully");
                 System.out.println();
-                System.out.println("Press ENTER to coutinue");
+                System.out.println("Press ENTER to continue");
                 sc.nextLine();
                 sc.nextLine();
             } else if (c == 3) {
                 System.out.println();
                 System.out.println("Your Balance is " + atm[curr_user].User_Balance);
                 System.out.println();
-                System.out.println("Press ENTER to coutinue");
+                System.out.println("Press ENTER to continue");
                 sc.nextLine();
                 sc.nextLine();
 
@@ -267,7 +274,7 @@ public class Atm {
                     System.out.println("---" + atm[curr_user].User_Statement.get(k) + "---");
                 }
                 System.out.println();
-                System.out.println("Press ENTER to coutinue");
+                System.out.println("Press ENTER to continue");
                 sc.nextLine();
                 sc.nextLine();
             } else if (c == 5) {
@@ -277,7 +284,7 @@ public class Atm {
                 atm[curr_user].User_Pin = New_Pin;
                 System.out.println("Pin has been Changed !");
                 System.out.println();
-                System.out.println("Press ENTER to coutinue");
+                System.out.println("Press ENTER to continue");
                 sc.nextLine();
             } else if (c == 6) {
                 System.out.println("Enter the account name You want to transfer");
@@ -297,13 +304,13 @@ public class Atm {
                             atm[curr_user].User_Balance -= am3;
                             System.out.println("Transaction successful press enter to continue");
                             atm[curr_user].User_Statement.add(date);
-                            System.out.println("\nPress ENTER to coutinue");
+                            System.out.println("\nPress ENTER to continue");
                             sc.nextLine();
                             sc.nextLine();
                             break;
                         } else {
-                            System.out.println("Not sufficient balance");
-                            System.out.println("\nPress ENTER to coutinue");
+                            System.out.println("Not sufficient balance in your Account");
+                            System.out.println("\nPress ENTER to continue");
                             sc.nextLine();
                             sc.nextLine();
                         }
@@ -322,7 +329,7 @@ public class Atm {
             } else {
                 System.out.println("Enter the valid case !");
                 System.out.println();
-                System.out.println("Press ENTER to coutinue");
+                System.out.println("Press ENTER to continue");
                 sc.nextLine();
                 sc.nextLine();
             }
@@ -343,7 +350,7 @@ public class Atm {
             System.out.println("Welcome to ATM");
             System.out.println("1 . Admin");
             System.out.println("2 . User");
-            System.out.println("3 . Exit");
+            System.out.println("3 . Exit\n");
             System.out.print("Enter your choice : ");
             int c = sc.nextInt();
 
@@ -352,9 +359,9 @@ public class Atm {
                 int flag = 1;
                 System.out.println("Enter Details to Login");
                 System.out.println();
-                System.out.print("Enter Name : ");
+                System.out.print("Enter UserName : ");
                 String name1 = sc.next();
-                System.out.print("Enter Pass : ");
+                System.out.print("Enter Password : ");
                 String pass1 = sc.next();
                 for (int i = 0; i < atm.length; i++) {
                     if (atm[i].User_Name.equals(name1) && atm[i].User_Pin.equals(pass1)) {
@@ -369,7 +376,7 @@ public class Atm {
                     System.out.println();
                     System.out.println("Enter correct details");
                     System.out.println();
-                    System.out.println("Press ENTER to coutinue");
+                    System.out.println("Press ENTER to continue");
                     sc.nextLine();
                     sc.nextLine();
                 }
@@ -394,7 +401,7 @@ public class Atm {
                     System.out.println();
                     System.out.println("Enter correct details");
                     System.out.println();
-                    System.out.println("Press ENTER to coutinue");
+                    System.out.println("Press ENTER to continue");
                     sc.nextLine();
                     sc.nextLine();
                 }
@@ -403,7 +410,7 @@ public class Atm {
                 break;
             } else {
                 System.out.println("Enter valid Input");
-                System.out.println("Press ENTER to countinue");
+                System.out.println("Press ENTER to continue");
                 sc.nextLine();
                 sc.nextLine();
             }
